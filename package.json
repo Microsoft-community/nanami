@@ -1,0 +1,29 @@
+{
+  "name": "nanami",
+  "version": "1.0.0",
+  "description": "A modular Discord bot written in TypeScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wisnoi/nanami.git"
+  },
+  "author": "wisnoi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wisnoi/nanami/issues"
+  },
+  "homepage": "https://github.com/wisnoi/nanami#readme",
+  "dependencies": {
+    "@discordjs/uws": "^11.149.1",
+    "@types/node": "^12.7.12",
+    "discord.js": "^11.5.1",
+    "zucc": "^0.1.2"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-willow": "^1.0.11"
+  }
+}
