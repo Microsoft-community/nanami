@@ -23,6 +23,7 @@ export class RoleMention extends Module {
         if (!this.config.roleWhitelist.some(role => message.member.roles.has(role))) return;
         const command: Command = getCommandName(message, this.config.prefix, this.commandNames);
         if (command.name.length < 1) return;
+        
         const roles: Role[] = [];
 
         const str = message.content.slice(this.config.prefix.length + command.name.length).replace(/{([^}]+)}/g, (match): string => {
