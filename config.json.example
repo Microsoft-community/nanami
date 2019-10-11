@@ -3,5 +3,11 @@
     "VoiceChannelHelper": {
         "emitLog": "true",
         "purgeInterval": 1800000
+    },
+    "RoleMention": {
+        "prefix": "!",
+        roleWhitelist: [
+            ""
+        ]
     }
 }

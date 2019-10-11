@@ -1,3 +1,4 @@
-import { voiceChannelHelper } from './VoiceChannelHelper';
+import { voiceChannelHelper, VoiceChannelHelperConfig } from './VoiceChannelHelper';
+import { RoleMention, RoleMentionConfig } from './RoleMention'
 
-export { voiceChannelHelper }
+export { voiceChannelHelper, VoiceChannelHelperConfig, RoleMention, RoleMentionConfig }

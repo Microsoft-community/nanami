@@ -6,23 +6,25 @@ import { Module } from './Structures/Classes';
 import { EventContainer } from './Structures/Interfaces/Events/index.js';
 import { Config } from './Structures/Interfaces';
 
-const bot: Client = new Client();
+const client: Client = new Client();
 const config: Config = require('../config.json');
 
-bot.once('ready', async () => {
-    const modCol: ModuleCollection = await initializeModules(bot, config); 
+client.once('ready', async () => {
+    const modCol: ModuleCollection = await initializeModules(client, config); 
     
     modCol.modules.forEach((module: Module) => {
         console.log(`Initializing module: [${module.name}]`);
         module.handlers.forEach((container: EventContainer) => {
             if (container.handler.once) {
-                bot.once(container.event, (...args: any) => container.handler.func(...args));
+                client.once(container.event, (...args: any) => container.handler.func(...args));
             } else {
-                bot.on(container.event, (...args: any) => container.handler.func(...args));
+                client.on(container.event, (...args: any) => container.handler.func(...args));
             }
         });
-        console.log('Modules initialized');
+        console.log(`Initialized module [${module.name}]`);
     });
+
+    console.log('Modules initialized.');
 });
 
-bot.login(config.token);
+client.login(config.token);

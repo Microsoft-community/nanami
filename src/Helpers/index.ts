@@ -1,3 +1,4 @@
 import { initializeModules } from "./initializeModules";
+import { messageStringToRole, guildStringToRole } from "./stringToRole";
 
-export { initializeModules }
+export { initializeModules, messageStringToRole, guildStringToRole }
