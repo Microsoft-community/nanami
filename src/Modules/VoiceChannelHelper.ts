@@ -22,11 +22,11 @@ class VoiceChannelHelper extends Module {
         const channels = await this.db.all('SELECT text_id FROM channels WHERE set_to_purge = 1');
 
         for (const channel of channels) {
-            await this.purge(this.client.channels.get(channel.text_id) as Channel);
+            await this.purge(this.client.channels.get(channel.text_id) as TextChannel);
         }
     }  
     
-    private async purge(channel: any) {
+    private async purge(channel: TextChannel) {
         while (true) { 
             const messages = await channel.fetchMessages({ limit: 100 });
 
