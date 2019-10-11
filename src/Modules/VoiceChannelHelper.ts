@@ -1,8 +1,7 @@
-import { Client, GuildMember, Channel, PermissionOverwrites, VoiceChannel, TextChannel } from 'discord.js';
+import { Client, GuildMember, PermissionOverwrites, VoiceChannel, TextChannel } from 'discord.js';
 import * as sqlite from 'sqlite';
 
 import { Module } from '../Structures/Classes';
-import { Config } from 'src/Structures/Interfaces';
 
 class VoiceChannelHelper extends Module {
     db: sqlite.Database;

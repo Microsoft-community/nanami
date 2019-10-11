@@ -1,6 +1,8 @@
-import { VoiceChannelHelperConfig } from "src/Modules/VoiceChannelHelper";
+import { VoiceChannelHelperConfig } from "../../Modules/";
+import { RoleMentionConfig } from "../../Modules/";
 
 export interface Config {
     token: string;
     VoiceChannelHelper: VoiceChannelHelperConfig;
+    RoleMention: RoleMentionConfig;
 }
