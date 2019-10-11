@@ -4,8 +4,10 @@
   "description": "A modular Discord bot written in TypeScript.",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node build"
+    "start": "npm-run-all clean build launch",
+    "clean": "rimraf build && rimraf tsconfig.tsbuildinfo",
+    "build": "tsc -p .",
+    "launch": "node build"
   },
   "repository": {
     "type": "git",
@@ -25,8 +27,6 @@
     "zucc": "^0.1.2"
   },
   "devDependencies": {
-    "@types/node": "^12.7.12",
-    "eslint": "^6.5.1",
-    "eslint-config-willow": "^1.0.11"
+    "@types/node": "^12.7.12"
   }
 }

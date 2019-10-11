@@ -2,6 +2,16 @@
 
 A Discord bot for the [Microsoft Community](https://discord.gg/microsoft) server that does.. a bunch of stuff. Modularly!
 
+# Setup
+
+Use ``sudo`` on the global install commands where necessary.
+
+```
+npm install -g typescript@next rimraf npm-run-all
+npm install
+npm start
+```
+
 # Requesting a feature
 
 Open an issue in the [issues](https://github.com/wisnoi/nanami/issues) tab. 
@@ -21,7 +31,7 @@ CREATE TABLE channels (
 
 As well as configuration options in the [config](config.json.example).
 
-The given database is currently set up to work with the Microsoft Community Discord, so make sure you overwrite the entries with applicable entries for your own servers! :)
+The given database is currently set up to work with a private development server, so make sure you overwrite the entries with applicable entries for your own servers! :)
 
 # Creating a Module
 
