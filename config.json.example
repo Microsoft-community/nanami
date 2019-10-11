@@ -6,7 +6,7 @@
     },
     "RoleMention": {
         "prefix": "!",
-        roleWhitelist: [
+        "roleWhitelist": [
             ""
         ]
     }
