@@ -4,7 +4,10 @@
   "description": "A modular Discord bot written in TypeScript.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm-run-all clean build launch",
+    "clean": "rimraf build && rimraf tsconfig.tsbuildinfo",
+    "build": "tsc -p .",
+    "launch": "node build"
   },
   "repository": {
     "type": "git",
@@ -18,12 +21,12 @@
   "homepage": "https://github.com/wisnoi/nanami#readme",
   "dependencies": {
     "@discordjs/uws": "^11.149.1",
-    "@types/node": "^12.7.12",
     "discord.js": "^11.5.1",
+    "sqlite": "^3.0.3",
+    "typescript": "^3.7.0-beta",
     "zucc": "^0.1.2"
   },
   "devDependencies": {
-    "eslint": "^6.5.1",
-    "eslint-config-willow": "^1.0.11"
+    "@types/node": "^12.7.12"
   }
 }
