@@ -4,7 +4,7 @@ import { Module } from '../Structures/Classes';
 
 export class TestModule extends Module {
     constructor(client: Client) {
-        super(client);
+        super(client, "TestModule");
 
         this.handlers.push({ event: 'message', handler: { func: this.handleMessage } });
     }

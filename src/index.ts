@@ -12,6 +12,7 @@ bot.once('ready', async () => {
     const modCol: ModuleCollection = await initializeModules(bot);
     
     modCol.modules.forEach((module: Module) => {
+        console.log(`Initializing module: [${module.name}]`);
         module.handlers.forEach((container: EventContainer) => {
             if (container.handler.once) {
                 bot.once(container.event, (...args: any) => container.handler.func(...args));

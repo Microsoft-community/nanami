@@ -25,7 +25,8 @@
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
       "baseUrl": "./",
-      "resolveJsonModule": true
+      "resolveJsonModule": true,
+      "moduleResolution": "node"
   },
   "include": [
       "./src/**/*",

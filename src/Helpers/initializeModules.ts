@@ -1,7 +1,6 @@
 import { Client } from 'discord.js';
 
 import { ModuleCollection } from '../Structures/Interfaces/Modules';
-
 import { voiceChannelHelper } from '../Modules';
 
 export async function initializeModules(client: Client): Promise<ModuleCollection> {

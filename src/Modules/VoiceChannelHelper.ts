@@ -8,7 +8,7 @@ class VoiceChannelHelper extends Module {
     db: sqlite.Database;
     
     constructor(client: Client, db: sqlite.Database) {
-        super(client);
+        super(client, "Voice Channel Helper");
         
         this.db = db;
 
@@ -45,15 +45,9 @@ class VoiceChannelHelper extends Module {
         if (oldMember.voiceChannelID === newMember.voiceChannelID) return;
 
         const channels = await this.db.all('SELECT voice_id, text_id FROM channels');
-        console.log(channels);
 
         if (channels.some((v) => v.voice_id == oldMember.voiceChannelID)) {
-            console.log('owo');
-            console.log(channels);
-            console.log('uwu');
-            console.log(typeof channels[0].voice_id);
             const voiceChannel = this.client.channels.get(oldMember.voiceChannelID) as VoiceChannel;
-            console.log(oldMember.voiceChannelID);
             const textChannel = this.client.channels.get(channels.find((v) => v.voice_id == oldMember.voiceChannelID).text_id) as TextChannel;
             const permissions = textChannel.permissionOverwrites.find((v: PermissionOverwrites) => v.id === oldMember.id);
 
@@ -78,6 +72,5 @@ class VoiceChannelHelper extends Module {
 }
 
 export async function voiceChannelHelper(client: Client): Promise<VoiceChannelHelper> {
-    console.log('loading');
     return new VoiceChannelHelper(client, await sqlite.open(__dirname + '/../../db/channels.db'));
 }
