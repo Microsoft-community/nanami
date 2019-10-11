@@ -102,3 +102,6 @@ public
 
 # Build directory
 build
+
+# Nanami config
+config.json

@@ -24,7 +24,8 @@
       "esModuleInterop": true,
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
-      "baseUrl": "./"
+      "baseUrl": "./",
+      "resolveJsonModule": true
   },
   "include": [
       "./src/**/*",

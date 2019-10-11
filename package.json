@@ -4,7 +4,8 @@
   "description": "A modular Discord bot written in TypeScript.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "node build"
   },
   "repository": {
     "type": "git",
@@ -20,10 +21,12 @@
     "@discordjs/uws": "^11.149.1",
     "@types/node": "^12.7.12",
     "discord.js": "^11.5.1",
+    "dotenv": "^8.1.0",
     "zucc": "^0.1.2"
   },
   "devDependencies": {
     "eslint": "^6.5.1",
-    "eslint-config-willow": "^1.0.11"
+    "eslint-config-willow": "^1.0.11",
+    "typescript": "^3.7.0-beta"
   }
 }

@@ -1,12 +1,20 @@
-import Nanami from './Nanami';
-import { Config } from './Types';
+import { Client } from 'discord.js';
 
-const config: Config = require('../config.json');
+import { TestModule } from './Modules';
+import { EventContainer } from './Structures/Interfaces/Events';
 
-class Main {
-    private Nanami: Nanami;
+import config from './config.json';
 
-    public constructor() {
-        this.Nanami = new Nanami(config);
-    }
-}
+const bot: Client = new Client();
+
+const test: TestModule = new TestModule(bot);
+
+test.handlers.forEach((container: EventContainer) => {
+    bot.on(container.event, container.handler);
+});
+
+bot.once('ready', () => {
+    console.log('a');
+});
+
+bot.login(config.token);
