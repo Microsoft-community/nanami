@@ -22,6 +22,7 @@
     "@types/node": "^12.7.12",
     "discord.js": "^11.5.1",
     "dotenv": "^8.1.0",
+    "sqlite": "^3.0.3",
     "zucc": "^0.1.2"
   },
   "devDependencies": {

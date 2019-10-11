@@ -1,20 +1,25 @@
 import { Client } from 'discord.js';
 
-import { TestModule } from './Modules';
-import { EventContainer } from './Structures/Interfaces/Events';
-
 import config from './config.json';
+import { initializeModules } from './Helpers';
+import { ModuleCollection } from './Structures/Interfaces/Modules';
+import { Module } from './Structures/Classes';
+import { EventContainer } from './Structures/Interfaces/Events/index.js';
 
 const bot: Client = new Client();
 
-const test: TestModule = new TestModule(bot);
-
-test.handlers.forEach((container: EventContainer) => {
-    bot.on(container.event, container.handler);
-});
-
-bot.once('ready', () => {
-    console.log('a');
+bot.once('ready', async () => {
+    const modCol: ModuleCollection = await initializeModules(bot);
+    
+    modCol.modules.forEach((module: Module) => {
+        module.handlers.forEach((container: EventContainer) => {
+            if (container.handler.once) {
+                bot.once(container.event, (...args: any) => container.handler.func(...args));
+            } else {
+                bot.on(container.event, (...args: any) => container.handler.func(...args));
+            }
+        });
+    });
 });
 
 bot.login(config.token);

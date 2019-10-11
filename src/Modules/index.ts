@@ -1,3 +1,4 @@
 import { TestModule } from './TestModule';
+import { voiceChannelHelper } from './VoiceChannelHelper';
 
-export { TestModule }
+export { TestModule, voiceChannelHelper }

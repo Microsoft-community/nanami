@@ -6,7 +6,7 @@ export class TestModule extends Module {
     constructor(client: Client) {
         super(client);
 
-        this.handlers.push({ event: 'message', handler: this.handleMessage });
+        this.handlers.push({ event: 'message', handler: { func: this.handleMessage } });
     }
 
     async handleMessage(message: Message) {
