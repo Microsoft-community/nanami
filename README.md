@@ -21,6 +21,8 @@ CREATE TABLE channels (
 
 As well as configuration options in the [config](config.json.example).
 
+The given database is currently set up to work with the Microsoft Community Discord, so make sure you overwrite the entries with applicable entries for your own servers! :)
+
 # Creating a Module
 
 It's pretty messy, at the moment.
