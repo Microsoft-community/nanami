@@ -2,14 +2,16 @@ import { Client, GuildMember, Channel, PermissionOverwrites, VoiceChannel, TextC
 import * as sqlite from 'sqlite';
 
 import { Module } from '../Structures/Classes';
-import config from '../config.json';
+import { Config } from 'src/Structures/Interfaces';
 
 class VoiceChannelHelper extends Module {
     db: sqlite.Database;
-    
-    constructor(client: Client, db: sqlite.Database) {
+    config: VoiceChannelHelperConfig;
+
+    constructor(client: Client, db: sqlite.Database, config: VoiceChannelHelperConfig) {
         super(client, "Voice Channel Helper");
         
+        this.config = config;
         this.db = db;
 
         this.handlers.push({ event: 'voiceStateUpdate', handler: { func: this.handleVoiceStateUpdate.bind(this) }});
@@ -38,7 +40,7 @@ class VoiceChannelHelper extends Module {
     }
 
     handleReady() {
-        setInterval(this.purgeAll, config.VoiceChannelHelper.purgeInterval);
+        setInterval(this.purgeAll, this.config.purgeInterval);
     }
 
     async handleVoiceStateUpdate(oldMember: GuildMember, newMember: GuildMember) {
@@ -56,7 +58,7 @@ class VoiceChannelHelper extends Module {
             }
 
             if (permissions) permissions.delete();
-            if (config.VoiceChannelHelper.emitLog) textChannel.send(`${oldMember} has left the voice channel.`);
+            if (this.config.emitLog) textChannel.send(`${oldMember} has left the voice channel.`);
         }
 
         if (channels.some((v) => v.voice_id == newMember.voiceChannelID)) {
@@ -65,12 +67,17 @@ class VoiceChannelHelper extends Module {
             this.db.run('UPDATE channels SET set_to_purge = 0 WHERE voice_id = ?', [newMember.voiceChannelID]);
 
             textChannel.overwritePermissions(newMember, { "VIEW_CHANNEL": true });
-            if (config.VoiceChannelHelper.emitLog) textChannel.send(`${newMember} has entered the voice channel.`);
+            if (this.config.emitLog) textChannel.send(`${newMember} has entered the voice channel.`);
         }
     }
 
 }
 
-export async function voiceChannelHelper(client: Client): Promise<VoiceChannelHelper> {
-    return new VoiceChannelHelper(client, await sqlite.open(__dirname + '/../../db/channels.db'));
+export async function voiceChannelHelper(client: Client, config: VoiceChannelHelperConfig): Promise<VoiceChannelHelper> {
+    return new VoiceChannelHelper(client, await sqlite.open(__dirname + '/../../db/channels.db'), config);
+}
+
+export interface VoiceChannelHelperConfig {
+    emitLog: string;
+    purgeInterval: number;
 }

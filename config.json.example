@@ -1,0 +1,7 @@
+{
+    "token": "",
+    "VoiceChannelHelper": {
+        "emitLog": "true",
+        "purgeInterval": 1800000
+    }
+}
