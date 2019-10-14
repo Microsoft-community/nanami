@@ -15,6 +15,11 @@ client.once('ready', async () => {
     modCol.modules.forEach((module: Module) => {
         console.log(`Initializing module: [${module.name}]`);
         module.handlers.forEach((container: EventContainer) => {
+            if (container.event === 'ready') {
+                container.handler.func();
+                if (container.handler.once) return;
+            }
+
             if (container.handler.once) {
                 client.once(container.event, (...args: any) => container.handler.func(...args));
             } else {
