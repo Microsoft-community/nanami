@@ -20,7 +20,9 @@ export class RoleMention extends Module {
 
     async handleMessage(message: Message) {
         if (message.author.bot) return;
-        if (!this.config.roleWhitelist.some(role => message.member.roles.has(role))) return;
+        if (message.member.roles) {
+            if (!this.config.roleWhitelist.some(role => message.member.roles.has(role))) return;
+        } else return;
         const command: Command = getCommandName(message, this.config.prefix, this.commandNames);
         if (command.name.length < 1) return;
         
