@@ -39,7 +39,7 @@ class VoiceChannelHelper extends Module {
     }
 
     handleReady() {
-        setInterval(this.purgeAll, this.config.purgeInterval);
+        setInterval(this.purgeAll.bind(this), this.config.purgeInterval);
     }
 
     async handleVoiceStateUpdate(oldMember: GuildMember, newMember: GuildMember) {
