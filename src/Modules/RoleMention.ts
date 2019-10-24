@@ -32,7 +32,7 @@ export class RoleMention extends Module {
             const role = messageStringToRole(message, cleanMatch(match));
             if (role) {
                 roles.push(role);
-                role.setMentionable(true).catch(console.error);
+                role.setMentionable(true).catch(this.logger.critical);
                 return role.toString();
             } else {
                 return 'Invalid Role';
@@ -44,7 +44,7 @@ export class RoleMention extends Module {
         message.channel.send(str);
 
         roles.forEach((role) => {
-            role.setMentionable(false).catch(console.error);
+            role.setMentionable(false).catch(this.logger.critical);
         });
     }
 }

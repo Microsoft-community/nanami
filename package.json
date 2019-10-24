@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/wisnoi/nanami#readme",
   "dependencies": {
-    "@discordjs/uws": "^11.149.1",
     "discord.js": "^11.5.1",
+    "simpleloggerw": "^1.0.5",
     "sqlite": "^3.0.3",
     "typescript": "^3.7.0-beta",
     "zucc": "^0.1.2"
