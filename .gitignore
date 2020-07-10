@@ -105,3 +105,6 @@ build
 
 # Nanami config
 config.json
+
+# Nanami development files
+*.dev
