@@ -21,11 +21,7 @@ class VoiceChannelHelper extends Module {
         const channels = await this.db.all('SELECT text_id FROM channels WHERE set_to_purge = 1');
 
         for (const channel of channels) {
-            if (!channel.guild.me.permissionsIn(channel).has(["MANAGE_CHANNELS", "MANAGE_MESSAGES"])) {
-                this.logger.critical("[VoiceChannelHelper]: Insufficient permissions: Manage Channels/Manage Messages. Halting purge operation. Channel ID: " + channel.id);
-            } else {
-                await this.purge(this.client.channels.get(channel.text_id) as TextChannel);
-            }
+            await this.purge(this.client.channels.get(channel.text_id) as TextChannel);
         }
     }  
     
@@ -56,45 +52,22 @@ class VoiceChannelHelper extends Module {
             const textChannel = this.client.channels.get(channels.find((v) => v.voice_id == oldMember.voiceChannelID).text_id) as TextChannel;
             const permissions = textChannel.permissionOverwrites.find((v: PermissionOverwrites) => v.id === oldMember.id);
 
-            if (this.config.emitLog) {   
-                if (!textChannel.guild.me.permissionsIn(textChannel).has(["SEND_MESSAGES"])) { 
-                    this.logger.critical("[VoiceChannelHelper]: Insufficient permissions: Send Messages. Log emit failure. Channel ID: " + textChannel.id);
-                } else {
-                    textChannel.send(`${oldMember} has left the voice channel.`); 
-                }
-            }
-
-            if (!textChannel.guild.me.permissionsIn(textChannel).has(["MANAGE_CHANNELS", "MANAGE_MESSAGES"])) {
-                this.logger.critical("[VoiceChannelHelper]: Insufficient permissions: Manage Channels/Manage Messages. Halting permission update operation. Channel ID: " + textChannel.id);
-                return;
-            }
-
             if (voiceChannel.members.size < 1) {
                 this.db.run('UPDATE channels SET set_to_purge = 1 WHERE voice_id = ?', [oldMember.voiceChannelID]);
             }
 
             if (permissions) permissions.delete();
+            if (this.config.emitLog) textChannel.send(`${oldMember} has left the voice channel.`); 
         }
 
         if (channels.some((v) => v.voice_id == newMember.voiceChannelID)) {
             const textChannel = this.client.channels.get(channels.find((v) => v.voice_id === newMember.voiceChannelID).text_id) as TextChannel;
 
-            if (this.config.emitLog) {   
-                if (!textChannel.guild.me.permissionsIn(textChannel).has(["SEND_MESSAGES"])) { 
-                    this.logger.critical("[VoiceChannelHelper]: Insufficient permissions: Send Messages. Log emit failure. Channel ID: " + textChannel.id);
-                } else {
-                    textChannel.send(`${newMember} has joioned the voice channel.`); 
-                }
-            }
-
-            if (!textChannel.guild.me.permissionsIn(textChannel).has(["MANAGE_CHANNELS", "MANAGE_MESSAGES"])) {
-                this.logger.critical("[VoiceChannelHelper]: Insufficient permissions: Manage Channels/Manage Messages. Halting permission update operation. Channel ID: " + textChannel.id);
-                return;
-            }
-
             this.db.run('UPDATE channels SET set_to_purge = 0 WHERE voice_id = ?', [newMember.voiceChannelID]);
 
             textChannel.overwritePermissions(newMember, { "VIEW_CHANNEL": true });
+
+            if (this.config.emitLog) textChannel.send(`${newMember} has joioned the voice channel.`);
         }
     }
 
