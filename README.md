@@ -26,7 +26,7 @@ It has a [database file](db) with the following schema:
 ```
 CREATE TABLE channels (
     voice_id TEXT PRIMARY KEY,
-    channel_id TEXT NOT NULL,
+    text_id TEXT NOT NULL,
     set_to_purge INTEGER NOT NULL
 );
 ```
