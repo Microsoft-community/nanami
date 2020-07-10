@@ -28,7 +28,7 @@ client.once('ready', async () => {
                 client.on(container.event, (...args: any) => container.handler.func(...args));
             }
         });
-        Logger.info(`Initialized module [${module.name}]`);
+        Logger.info(`Initialized module: [${module.name}]`);
     });
 
     Logger.info('Modules initialized.');
