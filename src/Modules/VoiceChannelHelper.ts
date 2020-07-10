@@ -18,7 +18,7 @@ export class VoiceChannelHelper extends Module {
 
     private async purgeAll() {
         const result = await DB.query('SELECT text_id FROM channels WHERE set_to_purge = 1');
-        
+
         for (const channel of result.rows) {
             await this.purge(this.client.channels.cache.get(channel.text_id) as TextChannel);
         }
@@ -38,8 +38,7 @@ export class VoiceChannelHelper extends Module {
     }
 
     handleReady() {
-        //setInterval(this.purgeAll.bind(this), this.config.purgeInterval);
-        setInterval(this.purgeAll.bind(this), 20000);
+        setInterval(this.purgeAll.bind(this), this.config.purgeInterval);
     }
 
     async handleVoiceStateUpdate(oldState: VoiceState, newState: VoiceState) {
