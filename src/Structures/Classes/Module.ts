@@ -3,7 +3,6 @@ import { Client } from 'discord.js';
 import { EventContainer } from '../Interfaces/Events';
 import SimpleLoggerW = require('simpleloggerw');
 
-
 export class Module {
     name: string;
     handlers: EventContainer[];
