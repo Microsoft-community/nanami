@@ -1,3 +1,3 @@
-import { voiceChannelHelper, VoiceChannelHelperConfig } from './VoiceChannelHelper';
+import { VoiceChannelHelper, VoiceChannelHelperConfig } from './VoiceChannelHelper';
 
-export { voiceChannelHelper, VoiceChannelHelperConfig }
+export { VoiceChannelHelper, VoiceChannelHelperConfig }
