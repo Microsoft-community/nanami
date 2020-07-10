@@ -20,13 +20,14 @@
   },
   "homepage": "https://github.com/wisnoi/nanami#readme",
   "dependencies": {
-    "discord.js": "^11.5.1",
+    "discord.js": "^12.2.0",
     "simpleloggerw": "^1.0.5",
     "sqlite": "^3.0.3",
-    "typescript": "^3.7.0-beta",
+    "typescript": "^4.0.0-dev.20200710",
     "zucc": "^0.1.2"
   },
   "devDependencies": {
-    "@types/node": "^12.7.12"
+    "@types/node": "^12.7.12",
+    "@types/ws": "^7.2.6"
   }
 }

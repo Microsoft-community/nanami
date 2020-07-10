@@ -1,6 +1,7 @@
 import { EventHandler } from '.';
+import { ClientEvents } from 'discord.js';
 
 export interface EventContainer {
-    event: string;
+    event: keyof ClientEvents;
     handler: EventHandler;
 }

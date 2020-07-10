@@ -1,4 +1,4 @@
-import { Client, GuildMember, PermissionOverwrites, VoiceChannel, TextChannel } from 'discord.js';
+import { Client, GuildMember, PermissionOverwrites, VoiceChannel, TextChannel, VoiceState } from 'discord.js';
 import * as sqlite from 'sqlite';
 
 import { Module } from '../Structures/Classes';
@@ -21,13 +21,13 @@ class VoiceChannelHelper extends Module {
         const channels = await this.db.all('SELECT text_id FROM channels WHERE set_to_purge = 1');
 
         for (const channel of channels) {
-            await this.purge(this.client.channels.get(channel.text_id) as TextChannel);
+            await this.purge(this.client.channels.cache.get(channel.text_id) as TextChannel);
         }
     }  
     
     private async purge(channel: TextChannel) {
         while (true) { 
-            const messages = await channel.fetchMessages({ limit: 100 });
+            const messages = await channel.messages.fetch({ limit: 100 });
 
             if (messages.size > 0) {
                 await channel.bulkDelete(messages);
@@ -42,32 +42,33 @@ class VoiceChannelHelper extends Module {
         setInterval(this.purgeAll.bind(this), this.config.purgeInterval);
     }
 
-    async handleVoiceStateUpdate(oldMember: GuildMember, newMember: GuildMember) {
-        if (oldMember.voiceChannelID === newMember.voiceChannelID) return;
+    async handleVoiceStateUpdate(oldState: VoiceState, newState: VoiceState) {
+        if (oldState.channelID === newState.channelID) return;
+        if (!newState.member || !oldState.member) return;
 
         const channels = await this.db.all('SELECT voice_id, text_id FROM channels');
 
-        if (channels.some((v) => v.voice_id == oldMember.voiceChannelID)) {
-            const voiceChannel = this.client.channels.get(oldMember.voiceChannelID) as VoiceChannel;
-            const textChannel = this.client.channels.get(channels.find((v) => v.voice_id == oldMember.voiceChannelID).text_id) as TextChannel;
-            const permissions = textChannel.permissionOverwrites.find((v: PermissionOverwrites) => v.id === oldMember.id);
+        if (oldState.channelID && channels.some((v) => v.voice_id == oldState.channelID)) {
+            const voiceChannel = this.client.channels.cache.get(oldState.channelID) as VoiceChannel;
+            const textChannel = this.client.channels.cache.get(channels.find((v) => v.voice_id == oldState.channelID).text_id) as TextChannel;
+            const permissions = textChannel.permissionOverwrites.find((v: PermissionOverwrites) => v.id === oldState.member!.id);
 
             if (voiceChannel.members.size < 1) {
-                this.db.run('UPDATE channels SET set_to_purge = 1 WHERE voice_id = ?', [oldMember.voiceChannelID]);
+                this.db.run('UPDATE channels SET set_to_purge = 1 WHERE voice_id = ?', [oldState.channelID]);
             }
 
             if (permissions) permissions.delete();
-            if (this.config.emitLog) textChannel.send(`${oldMember} has left the voice channel.`); 
+            if (this.config.emitLog) textChannel.send(`${oldState.member} has left the voice channel.`); 
         }
 
-        if (channels.some((v) => v.voice_id == newMember.voiceChannelID)) {
-            const textChannel = this.client.channels.get(channels.find((v) => v.voice_id === newMember.voiceChannelID).text_id) as TextChannel;
+        if (channels.some((v) => v.voice_id == newState.channelID)) {
+            const textChannel = this.client.channels.cache.get(channels.find((v) => v.voice_id === newState.channelID).text_id) as TextChannel;
 
-            this.db.run('UPDATE channels SET set_to_purge = 0 WHERE voice_id = ?', [newMember.voiceChannelID]);
+            this.db.run('UPDATE channels SET set_to_purge = 0 WHERE voice_id = ?', [newState.channelID]);
 
-            textChannel.overwritePermissions(newMember, { "VIEW_CHANNEL": true });
+            textChannel.updateOverwrite(newState.member, { "VIEW_CHANNEL": true });
 
-            if (this.config.emitLog) textChannel.send(`${newMember} has joioned the voice channel.`);
+            if (this.config.emitLog) textChannel.send(`${newState.member} has joined the voice channel.`);
         }
     }
 
