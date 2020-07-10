@@ -108,3 +108,6 @@ config.json
 
 # Nanami development files
 *.dev
+
+# Nanami databases
+*.db

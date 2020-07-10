@@ -18,21 +18,6 @@ npm start
 
 Open an issue in the [issues](https://github.com/wisnoi/nanami/issues) tab. 
 
-# Voice Channel Helper
-
-This bot comes with a module named [Voice Channel Helper](src/Modules/VoiceChannelHelper.ts). If you wish to create modules, you can use it as an example! 
-It has a [database file](db) with the following schema:
-
-```
-CREATE TABLE channels (
-    voice_id TEXT PRIMARY KEY,
-    text_id TEXT NOT NULL,
-    set_to_purge INTEGER NOT NULL
-);
-```
-
-As well as configuration options in the [config](config.json.example).
-
 The given database is currently set up to work with a private development server, so make sure you overwrite the entries with applicable entries for your own servers! :)
 
 # Creating a Module
