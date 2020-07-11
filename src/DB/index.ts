@@ -12,9 +12,7 @@ const pool = new Pool({
 });
 
 const query = async (text: string, params?: string[]) => {
-    return await pool.query(text, params).catch(err => {
-        throw err;
-    })
+    return await pool.query(text, params);
 }
 
 interface Channels {

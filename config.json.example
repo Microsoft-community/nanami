@@ -5,4 +5,11 @@
         "emitLog": "true",
         "purgeInterval": 1800000
     },
+        "PostgreSQL": {
+        "user": "postgres",
+        "host": "localhost",
+        "database": "msc",
+        "password": "",
+        "port": 0000
+    }
 }
